@@ -15,7 +15,7 @@ int fWrapper(unsigned ndim, const double *x, void *fdata, unsigned fdim, double 
 
     Rcpp::NumericVector xVal(ndim);   /* The x argument for the R function f */
     double* xp = xVal.begin();        /* The ptr to x (real) vector */
-    for (unsigned i = 0; i < ndim; ++i) {
+    for (int i = 0; i < ndim; ++i) {
         xp[i] = x[i];
     }
 
@@ -26,20 +26,20 @@ int fWrapper(unsigned ndim, const double *x, void *fdata, unsigned fdim, double 
     // Rcpp::Rcout<<"after call" <<std::endl;
 
     double* fxp = fx.begin();         /* The ptr to f(x) (real) vector */
-    for (unsigned i = 0; i < fdim; ++i) {
+    for (int i = 0; i < fdim; ++i) {
         fval[i] = fxp[i];
     }
     count++;
     return 0;
 }
 
-int fWrapper_v(unsigned ndim, size_t npts, const double *x, void *fdata,
+int fWrapper_v(unsigned ndim, unsigned long npts, const double *x, void *fdata,
                unsigned fdim, double *fval) {
     //     Rcpp::Rcout<<"In Wrapper" <<std::endl;
 
     Rcpp::NumericMatrix xVal(ndim, npts);   /* The x argument for the R function f */
     double* xp = xVal.begin();        /* The ptr to x (real) matrix */
-    for (unsigned i = 0; i < ndim * npts; ++i) {
+    for (int i = 0; i < ndim * npts; ++i) {
         xp[i] = x[i];
     }
 
@@ -50,7 +50,7 @@ int fWrapper_v(unsigned ndim, size_t npts, const double *x, void *fdata,
     //    Rcpp::Rcout<<"after call" <<std::endl;
 
     double* fxp = fx.begin();         /* The ptr to f(x) (real) matrix */
-    for (unsigned i = 0; i < fdim * npts; ++i) {
+    for (int i = 0; i < fdim * npts; ++i) {
         fval[i] = fxp[i];
     }
     count++;

@@ -14,7 +14,13 @@ cubature.ts:
 	cd cubature-1.0.2 && $(MAKE) libcubature.a CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS) -DNOSHORTS -DR_PACKAGE=1" AR=$(AR) RANLIB=$(RANLIB)
 	touch $@
 
+cuba.ts:
+	cd Cuba-4.2 && CC="$(CC)" CFLAGS="$(CFLAGS) $(CPICFLAGS)" AR="$(AR)" ARFLAGS="-U" RANLIB="$(RANLIB)" ./configure && $(MAKE) libcuba.a
+	touch $@
+
 clean:
 	rm -f Rcpp-cubature.o RcppExports.o rcubature.o
 	rm -f cubature-1.0.2/*.o
 	rm -f cubature-1.0.2/libcubature.a cubature-1.0.2/cubature.ts
+	rm -f Cuba-4.2/*.o
+	rm -f Cuba-4.2/libcuba.a Cuba-4.2/cuba.ts

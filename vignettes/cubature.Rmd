@@ -58,7 +58,8 @@ harness <- function(which = NULL,
              hc.v = "Vectorized Hcubature",
              pc = "Non-vectorized Pcubature",
              pc.v = "Vectorized Pcubature",
-             cc = "R2Cuba::cuhre")
+             cc = "R2Cuba::cuhre",
+             cc2 = "cubature::cuhre")
 
     hc <- function() cubature::hcubature(f = f,
                                          lowerLimit = lowerLimit,
@@ -93,6 +94,12 @@ harness <- function(which = NULL,
                                    rel.tol = tol,
                                    max.eval = 10^6,
                                    ...)
+
+    cc2 <- function() cubature::cuhre(f = f,
+                                      lowerLimit = lowerLimit, upperLimit = upperLimit,
+                                      ...)
+
+
     if (is.null(which)) {
         fnIndices <- seq_along(fns)
     } else {
@@ -250,7 +257,7 @@ testFn2_v <- function(x) {
     matrix(apply(x, 2, function(z) ifelse(sum(z * z) < radius * radius, 1, 0)), ncol = ncol(x))
 }
 
-d <- harness(which = c("hc", "hc.v", "cc"),
+d <- harness(which = c("hc", "hc.v", "cc", "cc2"),
              f = testFn2, fv = testFn2_v,
              lowerLimit = rep(0, 2), upperLimit = rep(1, 2), times = 10)
 knitr::kable(d, digits = 3)
